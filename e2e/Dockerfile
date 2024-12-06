@@ -2,10 +2,10 @@ FROM node:alpine
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY ./e2e .
 
 RUN npm install -g pnpm
 
 RUN pnpm install
 
-CMD ["pnpm", "test"]
+CMD ["sh", "-c", "ls -la && pnpm test"]

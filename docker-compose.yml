@@ -50,3 +50,14 @@ services:
       - 8025:8025
   mongo:
     image: mongo
+  e2e:
+    build:
+      dockerfile: ./e2e/Dockerfile
+    volumes:
+      - ./specs:/usr/src/app/specs
+    depends_on:
+      - reservations
+      - auth
+      - payments
+      - notifications
+      - mongo
