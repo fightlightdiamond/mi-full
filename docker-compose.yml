@@ -1,14 +1,47 @@
-version: '3.9'
-
 services:
-  mongodb:
-    image: mongo:6.0
-    restart: always
+  reservations:
+    build:
+      context: .
+      dockerfile: ./apps/reservations/Dockerfile
+      target: development
+    command: pnpm run start:dev reservations
+    env_file:
+      - ./apps/reservations/.env
     ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_DATABASE: mi
-
-volumes:
-  mongodb_data:
-    driver: local # Sử dụng volume local
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: pnpm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/app
+  # payments:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/payments/Dockerfile
+  #     target: development
+  #   command: pnpm run start:dev payments
+  #   env_file:
+  #     - ./apps/payments/.env
+  #   volumes:
+  #     - .:/usr/src/app
+  # notifications:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/notifications/Dockerfile
+  #     target: development
+  #   command: pnpm run start:dev notifications
+  #   env_file:
+  #     - ./apps/notifications/.env
+  #   volumes:
+  #     - .:/usr/src/app
+  mongo:
+    image: mongo
