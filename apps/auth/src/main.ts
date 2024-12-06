@@ -37,6 +37,8 @@ async function createMicroservice(
       port: configService.get('TCP_PORT'),
     },
   });
-  await app.startAllMicroservices();
+  await app
+    .startAllMicroservices()
+    .then(() => console.log('-------Authenticate Service started-------'));;
 }
 bootstrap();
