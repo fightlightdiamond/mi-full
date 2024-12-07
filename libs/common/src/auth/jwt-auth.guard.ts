@@ -57,6 +57,7 @@ export class JwtAuthGuard implements CanActivate {
    * @param res
    */
   checkRole(context: ExecutionContext, res: UserDto) {
+    //get role access buy @Roles
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
     if (roles) {
